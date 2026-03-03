@@ -29,12 +29,3 @@ image: /assets/characters/mr-blueberry.png
     <p class="byline">World by {{ site.authors | array_to_sentence_string }}</p>
   </div>
 </section>
-
-<section id="about" class="panel paper">
-  <h2>What Is the World of Mr Blueberry?</h2>
-  <p>
-    It is a cheerful, hand-drawn place where everyone is a little different
-    and every personality has room to shine. Mr Blueberry keeps things moving
-    with curiosity, kindness, and a very serious mustache.
-  </p>
-</section>
