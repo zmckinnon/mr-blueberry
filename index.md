@@ -108,22 +108,3 @@ image: /assets/characters/mr-blueberry.png
     with curiosity, kindness, and a very serious mustache.
   </p>
 </section>
-
-<section class="panel paper">
-  <h2>Places to Know</h2>
-  <p>
-    The world of Mr Blueberry is full of familiar spots where friends run into
-    each other and chaos usually follows:
-  </p>
-  <ul>
-    <li>Blueberry Meadow, the center of town and gathering place.</li>
-    <li>Crown Hill, where big ideas begin and silly plans go sideways.</li>
-    <li>Giggle Lane, home to surprises, songs, and unexpected visitors.</li>
-  </ul>
-  <p>
-    Want to meet everyone who lives here?
-  </p>
-  <div class="cta-row">
-    <a class="btn btn-primary" href="{{ '/characters/' | relative_url }}">Visit the Character Guide</a>
-  </div>
-</section>
