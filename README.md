@@ -1,31 +1,40 @@
 # mrblueberry.club
 
-Jekyll-powered website for **Mr Blueberry** with reusable layouts and distinct pages.
+Jekyll site for the world of **Mr Blueberry**.
 
-## Local development
+## Requirements
 
-Requires Ruby 3.1+ and Bundler.
+- Ruby 3.1+
+- Bundler 2.5+
+
+## Run locally
 
 ```bash
-bundle install
-bundle exec jekyll serve --host 0.0.0.0 --port 3000 --livereload
+cd /Users/zmckinnon/GitHub/mr-blueberry
+bundle _2.5.11_ install
+bundle _2.5.11_ exec jekyll serve --host 127.0.0.1 --port 3000 --livereload
 ```
 
-Then open:
+Open: http://127.0.0.1:3000
 
-http://localhost:3000
+If Ruby 3.1 is installed with Homebrew, add it to your shell path:
 
-## Project structure
+```bash
+export PATH="/opt/homebrew/opt/ruby@3.1/bin:$PATH"
+```
 
-- `_layouts/default.html` shared site layout (head, nav, footer)
-- `_data/characters.yml` character content source
+## Content map
+
 - `index.md` homepage
-- `characters.md` characters page
+- `characters.md` character guide
+- `_layouts/default.html` shared layout
+- `_data/characters.yml` character data
 - `styles.css` site styling
+- `assets/characters/*.png` character images
 
-## Updating authors
+## Update authors
 
-Edit the `authors` list in `_config.yml`:
+Edit `authors` in `_config.yml`:
 
 ```yml
 authors:
@@ -33,18 +42,8 @@ authors:
   - Alice J
 ```
 
-Add more names as new list items. The homepage byline updates automatically.
+The homepage byline updates automatically.
 
-## Character pictures
+## GitHub Pages
 
-The character intro page is:
-
-`/characters/`
-
-To show real character art on each card, add image files to:
-
-`assets/characters/`
-
-Use the exact filenames listed in:
-
-`assets/characters/README.md`
+This repo is set up to publish directly from `main` (no Actions workflow required).
