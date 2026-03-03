@@ -244,10 +244,11 @@ li {
   filter: drop-shadow(0 12px 16px rgba(17, 45, 106, 0.23));
 }
 
-.mrb-svg {
+.mrb-image {
   width: 100%;
   height: auto;
   display: block;
+  object-fit: contain;
 }
 
 .byline {
