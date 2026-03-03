@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ page.title | default: site.title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Gochi+Hand&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}" />
+  </head>
+  <body>
+    <div class="background-sparkle" aria-hidden="true"></div>
+
+    <main class="site-wrap">
+      {% assign is_home = false %}
+      {% if page.url == "/" or page.url == "/index.html" %}
+        {% assign is_home = true %}
+      {% endif %}
+      {% assign is_characters = false %}
+      {% if page.url contains "/characters" %}
+        {% assign is_characters = true %}
+      {% endif %}
+      <nav class="top-nav paper" aria-label="Main navigation">
+        <a class="brand-link" href="{{ '/' | relative_url }}">Mr Blueberry</a>
+        <div class="nav-links">
+          <a class="nav-link{% if is_home %} active{% endif %}" href="{{ '/' | relative_url }}"{% if is_home %} aria-current="page"{% endif %}>Home</a>
+          <a class="nav-link{% if is_characters %} active{% endif %}" href="{{ '/characters/' | relative_url }}"{% if is_characters %} aria-current="page"{% endif %}>Characters</a>
+        </div>
+      </nav>
+
+      {{ content }}
+    </main>
+
+    <footer class="site-footer">
+      <p>{{ page.footer_text | default: "mrblueberry.club • Welcome to the world of Mr Blueberry" }}</p>
+    </footer>
+  </body>
+</html>

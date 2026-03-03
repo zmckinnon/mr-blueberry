@@ -1,0 +1,7 @@
+node_modules/
+.idea/
+_site/
+.jekyll-cache/
+.sass-cache/
+.bundle/
+vendor/

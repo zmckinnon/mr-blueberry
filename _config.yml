@@ -1,0 +1,16 @@
+title: Mr Blueberry
+lang: en-US
+
+authors:
+  - Jay M
+  - Alice J
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+      image: /assets/characters/mr-blueberry.png
+
+exclude:
+  - vendor
