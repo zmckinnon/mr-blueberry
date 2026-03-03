@@ -280,6 +280,63 @@ li {
   margin-top: 0.25rem;
 }
 
+.notfound {
+  margin-top: 1.2rem;
+  padding: 1.3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem;
+  align-items: stretch;
+  animation: rise-in 700ms ease-out both;
+}
+
+.notfound-copy {
+  display: grid;
+  align-content: center;
+  gap: 0.6rem;
+}
+
+.notfound-code {
+  margin: 0;
+  font-size: clamp(4rem, 11vw, 7.2rem);
+  line-height: 0.9;
+  color: #0f46ba;
+}
+
+.notfound-actions {
+  margin-top: 0.5rem;
+}
+
+.notfound-art {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 0.8rem;
+  min-height: 420px;
+}
+
+.lost-sign {
+  position: absolute;
+  right: 0.35rem;
+  top: 0.2rem;
+  transform: rotate(8deg);
+  font-family: "Gochi Hand", "Baloo 2", cursive;
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  color: #192547;
+  background: rgba(255, 210, 40, 0.95);
+  border: 2px solid rgba(0, 0, 0, 0.24);
+  border-radius: 14px;
+  padding: 0.2rem 0.6rem;
+}
+
+.notfound-image {
+  width: min(330px, 80%);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 14px 16px rgba(17, 45, 106, 0.2));
+}
+
 .characters-intro {
   margin-top: 0;
 }
@@ -437,6 +494,15 @@ li {
 
   .hero-art {
     order: -1;
+  }
+
+  .notfound {
+    grid-template-columns: 1fr;
+  }
+
+  .notfound-art {
+    min-height: 0;
+    padding-top: 2rem;
   }
 }
 

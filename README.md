@@ -5,14 +5,14 @@ Jekyll site for the world of **Mr Blueberry**.
 ## Requirements
 
 - Ruby 3.1+
-- Bundler 2.5+
+- Bundler
 
 ## Run locally
 
 ```bash
 cd /Users/zmckinnon/GitHub/mr-blueberry
-bundle _2.5.11_ install
-bundle _2.5.11_ exec jekyll serve --host 127.0.0.1 --port 3000 --livereload
+bundle install
+bundle exec jekyll serve --host 127.0.0.1 --port 3000 --livereload
 ```
 
 Open: http://127.0.0.1:3000
@@ -47,3 +47,4 @@ The homepage byline updates automatically.
 ## GitHub Pages
 
 This repo is set up to publish directly from `main` (no Actions workflow required).
+`Gemfile.lock` is intentionally not committed so GitHub Pages can resolve its own supported dependency set.
