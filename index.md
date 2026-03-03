@@ -24,7 +24,7 @@ image: /assets/characters/mr-blueberry.png
   <div class="hero-art paper">
     <div class="star-burst">Hello!</div>
     <div class="mrb-illustration">
-      <img class="mrb-image" src="{{ '/assets/characters/mr-blueberry.png' | relative_url }}" alt="Mr Blueberry with a yellow crown and orange mustache" />
+      <img class="mrb-image" src="{{ '/assets/mr-blueberry-standing.png' | relative_url }}" alt="Mr Blueberry standing artwork" />
     </div>
     <p class="byline">World by {{ site.authors | array_to_sentence_string }}</p>
   </div>
