@@ -1,45 +1,60 @@
 - name: Mr Blueberry
   slug: blueberry
+  image: /assets/characters/mr-blueberry.png
   description: A crown-wearing blueberry who turns every day into an adventure.
 - name: Angry Orange
   slug: orange
+  image: /assets/characters/angry-orange.png
   description: Always grumpy at first, but secretly loves joining the fun.
 - name: Mr Bluebaby
   slug: babyblue
+  image: /assets/characters/mr-bluebaby.png
   description: The tiny helper who has a big heart and brave little ideas.
 - name: Chicken
   slug: chicken
+  image: /assets/characters/chicken.png
   description: A fast-talking friend who flaps into the middle of every story.
 - name: Sweet Strawberry
   slug: strawberry
+  image: /assets/characters/sweet-strawberry.png
   description: Cheerful and caring, always ready with encouraging words.
 - name: Grape
   slug: grape
+  image: /assets/characters/grape.png
   description: A cool, laid-back pal with funny jokes and big sunglasses energy.
 - name: Spicy Nacho
   slug: nacho
+  image: /assets/characters/spicy-nacho.png
   description: Hot-headed and dramatic, but impossible not to laugh with.
 - name: Henry
   slug: henry
+  image: /assets/characters/henry.png
   description: A curious kid who is always first to try a wild new plan.
 - name: Henry's Mom
   slug: mom
+  image: /assets/characters/henrys-mom.png
   description: Kind and caring, but when Henry pushes too far she can lose patience and raise her voice.
 - name: Froggy
   slug: froggy
+  image: /assets/characters/froggy.png
   description: A jumpy, playful friend who keeps the group moving.
 - name: Piggy Wiggy
   slug: piggy
+  image: /assets/characters/piggy-wiggy.png
   description: Sassy, stylish, and always ready for a dramatic entrance.
 - name: Banana Villain
   slug: banana
+  image: /assets/characters/banana-villain.png
   description: A goofy troublemaker whose plans are more silly than scary.
 - name: Mrs. Salamander
   slug: salamander
+  image: /assets/characters/mrs-salamander.png
   description: A sharp and confident friend with lots of clever ideas.
 - name: Pink Crayon
   slug: crayon
+  image: /assets/characters/pink-crayon.png
   description: A creative artist who colors every scene with imagination.
 - name: Moggy
   slug: moggy
+  image: /assets/characters/moggy.png
   description: A mischievous buddy with a big grin and a bigger personality.
