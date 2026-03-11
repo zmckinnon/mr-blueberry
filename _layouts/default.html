@@ -24,11 +24,16 @@
       {% if page.url contains "/characters" %}
         {% assign is_characters = true %}
       {% endif %}
+      {% assign is_about = false %}
+      {% if page.url contains "/about" %}
+        {% assign is_about = true %}
+      {% endif %}
       <nav class="top-nav paper" aria-label="Main navigation">
         <a class="brand-link" href="{{ '/' | relative_url }}">Mr Blueberry</a>
         <div class="nav-links">
           <a class="nav-link{% if is_home %} active{% endif %}" href="{{ '/' | relative_url }}"{% if is_home %} aria-current="page"{% endif %}>Home</a>
           <a class="nav-link{% if is_characters %} active{% endif %}" href="{{ '/characters/' | relative_url }}"{% if is_characters %} aria-current="page"{% endif %}>Characters</a>
+          <a class="nav-link{% if is_about %} active{% endif %}" href="{{ '/about/' | relative_url }}"{% if is_about %} aria-current="page"{% endif %}>About</a>
         </div>
       </nav>
 
