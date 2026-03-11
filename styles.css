@@ -255,14 +255,12 @@ li {
 }
 
 .byline {
-  margin-top: 1rem;
+  margin-top: 0.8rem;
   font-family: "Gochi Hand", "Baloo 2", cursive;
-  font-size: clamp(1.4rem, 2.2vw, 2rem);
-  color: #17213f;
-  background: rgba(255, 252, 240, 0.96);
-  border: 2px solid rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  padding: 0.2rem 0.6rem;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  color: rgba(23, 33, 63, 0.72);
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .panel {
