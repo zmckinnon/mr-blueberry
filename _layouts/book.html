@@ -1,0 +1,75 @@
+---
+layout: default
+---
+
+{% assign book_title = page.book_title | default: page.title %}
+
+<section class="book-reader-page">
+  <div class="book-reader-toolbar">
+    <a class="btn btn-secondary" href="{{ '/books/' | relative_url }}">Back to the Bookshelf</a>
+    <p class="book-reader-title">{{ book_title }} • {{ page.status }}</p>
+  </div>
+
+  <section class="book-reader paper">
+    <div class="book-viewer" data-book-viewer data-book-title="{{ book_title | escape }}">
+      <div
+        class="book-viewer-shell"
+        tabindex="0"
+        aria-label="Page flip reader for {{ book_title }}"
+      ></div>
+
+      <div class="book-viewer-sources" hidden aria-hidden="true">
+        {% for book_page in page.book_pages %}
+          <article
+            class="page-flip-source-page"
+            data-book-flip-page
+            data-page-label="{{ book_page.label | escape }}"
+            {% if book_page.page_density %}data-density="{{ book_page.page_density }}"{% endif %}
+            style="--page-image-fit: {{ book_page.image_fit | default: 'contain' }}; --page-image-position: {{ book_page.image_position | default: 'center center' }};"
+          >
+            {% if book_page.layout == "image-page" %}
+              <img
+                src="{{ book_page.image | relative_url }}"
+                alt="{{ book_page.image_alt }}"
+                loading="lazy"
+                decoding="async"
+              />
+            {% else %}
+              <div class="book-page-content{% if book_page.image or book_page.placeholder_text %} has-art{% endif %}{% if book_page.page_class %} {{ book_page.page_class }}{% endif %}">
+                <div class="book-page-copy">
+                  <p class="eyebrow">{{ book_page.eyebrow }}</p>
+                  <h2>{{ book_page.title }}</h2>
+                  <p>{{ book_page.body }}</p>
+                </div>
+
+                {% if book_page.image or book_page.placeholder_text %}
+                  <div class="book-page-illustration">
+                    {% if book_page.image %}
+                      <img
+                        src="{{ book_page.image | relative_url }}"
+                        alt="{{ book_page.image_alt }}"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    {% else %}
+                      <p class="book-page-placeholder">{{ book_page.placeholder_text }}</p>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+
+      <div class="book-viewer-controls">
+        <button class="book-viewer-btn" type="button" data-book-prev>Previous</button>
+        <p class="book-viewer-status" data-book-status aria-live="polite"></p>
+        <button class="book-viewer-btn" type="button" data-book-next>Next</button>
+      </div>
+    </div>
+  </section>
+</section>
+
+<script src="{{ '/assets/lib/page-flip.browser.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/book-viewer.js' | relative_url }}" defer></script>

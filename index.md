@@ -17,6 +17,7 @@ image: /assets/characters/mr-blueberry.png
       spontaneous parades to dramatic banana plots and frog-sized surprises.
     </p>
     <div class="cta-row">
+      <a class="btn btn-primary" href="{{ '/books/' | relative_url }}">Visit the Bookshelf</a>
       <a class="btn btn-secondary" href="{{ '/characters/' | relative_url }}">Explore the Characters</a>
     </div>
   </div>

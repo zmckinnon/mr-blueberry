@@ -1,6 +1,11 @@
 title: Mr Blueberry
 lang: en-US
 
+collections:
+  books:
+    output: true
+    permalink: /books/:name/
+
 authors:
   - Jay M
   - Alice J
@@ -11,6 +16,11 @@ defaults:
     values:
       layout: default
       image: /assets/characters/mr-blueberry.png
+  - scope:
+      path: ""
+      type: books
+    values:
+      layout: book
 
 exclude:
   - vendor
