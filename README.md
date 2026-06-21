@@ -57,6 +57,11 @@ authors:
 
 The homepage byline updates automatically.
 
+## Google Analytics
+
+Set `google_analytics_id` in `_config.yml` to the GA4 measurement ID, such as `G-XXXXXXXXXX`.
+Leave it blank to disable the Google tag.
+
 ## GitHub Pages
 
 This repo is set up to publish directly from `main` (no Actions workflow required).
