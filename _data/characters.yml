@@ -58,3 +58,7 @@
   slug: moggy
   image: /assets/characters/moggy.png
   description: A mischievous buddy with a big grin and a bigger personality.
+- name: Pickles
+  slug: pickles
+  image: /assets/characters/pickles.png
+  description: A good dog with big feelings who likes Mr Bluebaby.

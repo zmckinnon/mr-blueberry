@@ -461,6 +461,10 @@ li {
   background-image: linear-gradient(140deg, #e3ffa8, #91d34c);
 }
 
+.pickles {
+  background-image: linear-gradient(140deg, #baf2c5, #3f9b5f);
+}
+
 body.lightbox-open {
   overflow: hidden;
 }
