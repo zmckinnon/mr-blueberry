@@ -62,6 +62,7 @@ body {
 
 .nav-links {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 }
 
@@ -83,6 +84,12 @@ body {
 .nav-link.active {
   background: #ffd228;
   border-color: #c49400;
+}
+
+.nav-link--merch {
+  color: #123d1e;
+  background: var(--grass-300);
+  border-color: var(--grass-500);
 }
 
 .paper {
