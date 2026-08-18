@@ -424,6 +424,10 @@ li {
   background-image: linear-gradient(140deg, #fff0ba, #ffda6e);
 }
 
+.baby-chicken {
+  background-image: linear-gradient(140deg, #fff8cf, #ffc928);
+}
+
 .strawberry {
   background-image: linear-gradient(140deg, #ff9cab, #f3425e);
 }
@@ -474,6 +478,10 @@ li {
 
 .wally {
   background-image: linear-gradient(140deg, #f1c38c, #a85b24);
+}
+
+.fred {
+  background-image: linear-gradient(140deg, #ffd9a3, #a95520);
 }
 
 body.lightbox-open {

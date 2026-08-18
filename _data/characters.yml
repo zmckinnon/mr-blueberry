@@ -14,6 +14,10 @@
   slug: chicken
   image: /assets/characters/chicken.png
   description: A fast-talking friend who flaps into the middle of every story.
+- name: Baby Chicken
+  slug: baby-chicken
+  image: /assets/characters/baby-chicken.jpg
+  description: A cheerful little chick who toddles into every adventure.
 - name: Sweet Strawberry
   slug: strawberry
   image: /assets/characters/sweet-strawberry.png
@@ -66,3 +70,7 @@
   slug: wally
   image: /assets/characters/wally.jpg
   description: A tough-talking walrus in a red cap who always stands his ground.
+- name: Fred
+  slug: fred
+  image: /assets/characters/fred.jpg
+  description: A crafty chipmunk with a sharp grin and a plan for every occasion.
