@@ -62,3 +62,7 @@
   slug: pickles
   image: /assets/characters/pickles.png
   description: A good dog with big feelings who likes Mr Bluebaby.
+- name: Wally
+  slug: wally
+  image: /assets/characters/wally.jpg
+  description: A tough-talking walrus in a red cap who always stands his ground.

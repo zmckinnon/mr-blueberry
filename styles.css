@@ -472,6 +472,10 @@ li {
   background-image: linear-gradient(140deg, #baf2c5, #3f9b5f);
 }
 
+.wally {
+  background-image: linear-gradient(140deg, #f1c38c, #a85b24);
+}
+
 body.lightbox-open {
   overflow: hidden;
 }
