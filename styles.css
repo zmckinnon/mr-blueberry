@@ -1869,6 +1869,21 @@ body.lightbox-open {
   .top-nav {
     flex-direction: column;
     align-items: flex-start;
+    padding-inline: 0.65rem;
+  }
+
+  .nav-links {
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 0.2rem;
+  }
+
+  .nav-link {
+    flex: 0 1 auto;
+    padding: 0.38rem clamp(0.28rem, 1.5vw, 0.5rem);
+    font-size: clamp(0.75rem, 3.6vw, 0.9rem);
+    white-space: nowrap;
   }
 
   .character-grid {
