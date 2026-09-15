@@ -86,6 +86,20 @@ body {
   border-color: #c49400;
 }
 
+.nav-link--books,
+.nav-link--books.active {
+  color: #fff;
+  background: #c62828;
+  border-color: #a51f1f;
+}
+
+.nav-link--about,
+.nav-link--about.active {
+  color: #fff;
+  background: #7b2cbf;
+  border-color: #5a189a;
+}
+
 .nav-link--merch {
   color: #123d1e;
   background: var(--grass-300);
@@ -482,6 +496,10 @@ li {
 
 .fred {
   background-image: linear-gradient(140deg, #ffd9a3, #a95520);
+}
+
+.libby {
+  background-image: linear-gradient(140deg, #ffe2f0, #b8e8ff);
 }
 
 body.lightbox-open {

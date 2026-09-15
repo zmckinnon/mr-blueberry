@@ -74,3 +74,7 @@
   slug: fred
   image: /assets/characters/fred.jpg
   description: A crafty chipmunk with a sharp grin and a plan for every occasion.
+- name: Libby
+  slug: libby
+  image: /assets/characters/libby.png
+  description: A whale with pink spots who is friendly and cheerful... but not always!
