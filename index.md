@@ -4,6 +4,11 @@ permalink: /
 image: /assets/characters/mr-blueberry.png
 ---
 
+<section class="diary-banner paper" aria-labelledby="diary-banner-title">
+  <h2 id="diary-banner-title">DIARY OF CHICKIN</h2>
+  <img class="diary-banner-art" src="{{ '/assets/characters/chicken.png' | relative_url }}" alt="Chicken from Mr Blueberry's world" />
+</section>
+
 <section class="hero">
   <div class="hero-copy paper">
     <p class="eyebrow">Welcome to Blueberry Meadow</p>

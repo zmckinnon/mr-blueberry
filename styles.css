@@ -115,6 +115,37 @@ body {
     inset 0 0 0 1px rgba(255, 255, 255, 0.65);
 }
 
+.diary-banner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(90px, 24vw, 220px);
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+  padding: clamp(1rem, 3vw, 2rem);
+  overflow: hidden;
+  border-color: #dba52a;
+  background:
+    repeating-linear-gradient(transparent 0 31px, rgba(47, 119, 239, 0.16) 31px 32px),
+    #fff6cf;
+}
+
+.diary-banner h2 {
+  margin: 0;
+  max-width: 13ch;
+  color: #a8341e;
+  font-family: "Gochi Hand", "Baloo 2", cursive;
+  font-size: clamp(1.9rem, 6.5vw, 4.8rem);
+  line-height: 1.1;
+}
+
+.diary-banner-art {
+  width: 100%;
+  height: clamp(140px, 25vw, 240px);
+  object-fit: cover;
+  object-position: 50% 85%;
+  mix-blend-mode: multiply;
+}
+
 .hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
