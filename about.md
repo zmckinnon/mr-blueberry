@@ -19,6 +19,10 @@ image: /assets/characters/mr-blueberry.png
     <li>Avery T</li>
     <li>Anna H</li>
     <li>Davis M</li>
+    <li>Mary Cate</li>
+    <li>Libby</li>
+    <li>Chat GBT</li>
+    <li>Alices Freind</li>
   </ul>
 </section>
 
