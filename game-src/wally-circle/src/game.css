@@ -1,0 +1,190 @@
+.wally-page-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1.4rem 0 1rem;
+}
+
+.wally-page-heading h1 { margin-bottom: 0; }
+.wally-page-heading .eyebrow { margin-bottom: 0.25rem; }
+
+.wally-game {
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.wally-game [hidden] { display: none !important; }
+
+.wally-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+}
+
+.wally-toolbar-info,
+.wally-toolbar-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.wally-version {
+  padding: 0.2rem 0.7rem;
+  border: 1px solid #d5a942;
+  border-radius: 999px;
+  background: #fff1bf;
+  color: #72500c;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.wally-distance { color: #495674; font-size: 0.95rem; }
+
+.wally-control-button {
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  min-height: 44px;
+  padding: 0.4rem 0.9rem;
+  border: 2px solid #b8d6ed;
+  border-radius: 999px;
+  background: #f0f8ff;
+  color: #173c77;
+  cursor: pointer;
+}
+
+.wally-control-button:disabled { opacity: 0.45; cursor: default; }
+.wally-control-button:enabled:hover { background: #dceeff; }
+.wally-control-button:focus-visible,
+.wally-joystick:focus-visible { outline: 3px solid var(--blue-700); outline-offset: 3px; }
+
+.wally-stage {
+  position: relative;
+  height: clamp(480px, 65vh, 660px);
+  background: #d8eff0;
+  border-block: 2px solid #b8d6ed;
+  isolation: isolate;
+}
+
+.wally-canvas-host { position: absolute; inset: 0; }
+.wally-canvas-host canvas { display: block; width: 100%; height: 100%; }
+.wally-canvas-host canvas:focus-visible { outline: 3px solid #2c64b8; outline-offset: -4px; }
+
+.wally-overlay {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: clamp(1rem, 4vw, 2.6rem);
+  background: linear-gradient(90deg, rgba(238, 249, 229, 0.64), transparent 75%);
+}
+
+.wally-title-card {
+  width: min(370px, 48%);
+  padding: 1.7rem;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  background: rgba(255, 254, 245, 0.94);
+  box-shadow: 0 12px 34px rgba(46, 72, 39, 0.1);
+}
+
+.wally-title-card h2 {
+  margin: 0.45rem 0 0.75rem;
+  font-size: clamp(2.7rem, 5vw, 4rem);
+}
+
+.wally-title-card p:not(.eyebrow) {
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+.wally-play {
+  margin-top: 1.2rem;
+  font-family: inherit;
+  font-size: 1.15rem;
+  cursor: pointer;
+  min-height: 50px;
+}
+
+.wally-play:disabled { opacity: 0.6; cursor: wait; }
+.wally-game[data-state="paused"] .wally-overlay,
+.wally-game[data-state="error"] .wally-overlay { justify-content: center; background: rgba(222, 239, 229, 0.6); }
+.wally-game[data-state="paused"] .wally-title-card,
+.wally-game[data-state="error"] .wally-title-card { width: min(390px, 100%); text-align: center; }
+
+.wally-joystick {
+  position: absolute;
+  z-index: 1;
+  left: clamp(1rem, 3vw, 2rem);
+  bottom: 1.25rem;
+  width: 126px;
+  height: 126px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  background: rgba(255, 254, 245, 0.64);
+  box-shadow: 0 4px 16px rgba(35, 69, 26, 0.12);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+.wally-joystick:active { cursor: grabbing; }
+.wally-joystick-thumb {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #fffdf0;
+  border: 2px solid #d4af46;
+  box-shadow: 0 4px 12px rgba(69, 72, 33, 0.18);
+  pointer-events: none;
+}
+
+.wally-joystick-arrow { position: absolute; color: #486342; font: 700 19px sans-serif; pointer-events: none; }
+.wally-joystick-arrow.up { top: 7px; }
+.wally-joystick-arrow.down { bottom: 7px; }
+.wally-joystick-arrow.left { left: 10px; }
+.wally-joystick-arrow.right { right: 10px; }
+
+.wally-controls-help {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  padding: 0.8rem 1rem;
+  color: #495674;
+}
+
+.wally-controls-help p { font-size: 1rem; }
+.wally-controls-help strong { color: #193b75; }
+.wally-status { font-weight: 700; }
+.wally-version-note { margin-top: 0.8rem; font-size: 1rem; text-align: center; color: #244f35; }
+.wally-noscript { padding: 1rem; background: #fff0bb; }
+
+@media (max-width: 699px) {
+  .wally-stage { height: 560px; }
+  .wally-overlay { align-items: flex-start; justify-content: center; background: linear-gradient(rgba(238, 249, 229, 0.45), transparent 80%); }
+  .wally-title-card { width: min(380px, 100%); padding: 1rem 1.1rem; text-align: center; }
+  .wally-title-card h2 { font-size: 2.65rem; margin-block: 0.2rem 0.4rem; }
+  .wally-title-card p:not(.eyebrow) { font-size: 1rem; }
+  .wally-play { margin-top: 0.7rem; }
+  .wally-game[data-state="paused"] .wally-overlay,
+  .wally-game[data-state="error"] .wally-overlay { align-items: center; }
+}
+
+@media (max-width: 400px) {
+  .wally-toolbar { padding: 0.6rem; }
+  .wally-toolbar-info { gap: 0.35rem; }
+  .wally-toolbar-actions { gap: 0.35rem; }
+  .wally-control-button { padding-inline: 0.7rem; }
+}

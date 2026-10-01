@@ -18,12 +18,12 @@ image: /assets/characters/wally-face.png
     <div class="game-card-copy">
       <p class="eyebrow">Starring your favorite walrus</p>
       <h2 id="wally-circle-title">Wally Circle</h2>
-      <p>A snake-style game with a Wally-sized twist. Big tusks, red cap, and a whole new world in 3D.</p>
-      <p class="game-status" id="wally-circle-status">Coming soon</p>
+      <p>Take Wally for a wander in 3D. Pick a direction and explore as far as you like.</p>
+      <p class="game-status" id="wally-circle-status">Early version</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="{{ '/games/wally-circle/' | relative_url }}" aria-describedby="wally-circle-status">Play Wally Circle <span aria-hidden="true">&rarr;</span></a>
       </div>
-      <p class="game-card-note">Wally's first game is on its way. Come take a peek!</p>
+      <p class="game-card-note">Try free roam, the first playable version of Wally Circle.</p>
     </div>
   </article>
 </section>

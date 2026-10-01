@@ -756,8 +756,7 @@ body.lightbox-open {
   font-size: clamp(2.5rem, 5vw, 3.8rem);
 }
 
-.game-card-copy .cta-row,
-.game-lobby .cta-row {
+.game-card-copy .cta-row {
   margin-top: 0;
 }
 
@@ -774,27 +773,6 @@ body.lightbox-open {
 .game-card-note {
   font-size: 1rem;
   color: #495674;
-}
-
-.game-lobby {
-  display: grid;
-  justify-items: center;
-  gap: 1rem;
-  padding: clamp(1.5rem, 5vw, 3rem);
-  text-align: center;
-}
-
-.game-lobby h1,
-.game-lobby h2 {
-  margin: 0;
-}
-
-.game-lobby .wally-portrait {
-  width: min(220px, 100%);
-}
-
-.game-lobby > p:not(.eyebrow):not(.game-status) {
-  max-width: 38ch;
 }
 
 .book-shelf {
