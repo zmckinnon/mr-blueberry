@@ -30,6 +30,8 @@ export PATH="/opt/homebrew/opt/ruby@3.1/bin:$PATH"
 - `_books/*.md` one file per book
 - `_layouts/book.html` shared book reader layout
 - `characters.md` character guide
+- `games.md` games landing page
+- `games/wally-circle.md` Wally Circle's coming-soon page (gameplay to follow)
 - `_layouts/default.html` shared layout
 - `_data/characters.yml` character data
 - `styles.css` site styling

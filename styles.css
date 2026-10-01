@@ -46,6 +46,7 @@ body {
   margin-bottom: 1rem;
   padding: 0.7rem 1rem;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 0.8rem;
@@ -53,6 +54,7 @@ body {
 }
 
 .brand-link {
+  white-space: nowrap;
   text-decoration: none;
   color: var(--blue-700);
   font-family: "Gochi Hand", "Baloo 2", cursive;
@@ -67,6 +69,9 @@ body {
 }
 
 .nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   text-decoration: none;
   font-weight: 700;
   color: #10316e;
@@ -91,6 +96,13 @@ body {
   color: #fff;
   background: #c62828;
   border-color: #a51f1f;
+}
+
+.nav-link--games,
+.nav-link--games.active {
+  color: #482000;
+  background: #ff9b2f;
+  border-color: #bd5b00;
 }
 
 .nav-link--about,
@@ -238,6 +250,12 @@ li {
   color: #113793;
   background: #e8f3ff;
   border-color: rgba(34, 112, 227, 0.55);
+}
+
+.nav-link:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid var(--blue-700);
+  outline-offset: 4px;
 }
 
 .hero-art {
@@ -685,8 +703,98 @@ body.lightbox-open {
   z-index: 1;
 }
 
+.games-intro,
 .books-intro {
   margin-top: 0;
+}
+
+.games-shelf {
+  margin-top: 1.2rem;
+}
+
+.game-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  overflow: hidden;
+}
+
+.game-card-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 390px;
+  padding: 2rem 1.5rem;
+  background:
+    repeating-radial-gradient(circle at center, transparent 0 48px, rgba(255, 255, 255, 0.55) 49px 52px, transparent 53px 78px),
+    linear-gradient(145deg, #fff0b5, #ffd675);
+}
+
+.wally-portrait {
+  display: block;
+  width: min(310px, 100%);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+  padding: 1rem;
+  background: var(--paper);
+  border: 6px solid var(--paper);
+  border-radius: 50%;
+  box-shadow: 0 12px 26px rgba(121, 49, 13, 0.18);
+}
+
+.game-card-copy {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 0.9rem;
+  padding: clamp(1.3rem, 4vw, 2.6rem);
+}
+
+.game-card-copy h2 {
+  margin: 0;
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+}
+
+.game-card-copy .cta-row,
+.game-lobby .cta-row {
+  margin-top: 0;
+}
+
+.game-status {
+  padding: 0.25rem 0.7rem;
+  border: 1px solid #d7a837;
+  border-radius: 999px;
+  background: #fff0bb;
+  color: #72500c;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.game-card-note {
+  font-size: 1rem;
+  color: #495674;
+}
+
+.game-lobby {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  text-align: center;
+}
+
+.game-lobby h1,
+.game-lobby h2 {
+  margin: 0;
+}
+
+.game-lobby .wally-portrait {
+  width: min(220px, 100%);
+}
+
+.game-lobby > p:not(.eyebrow):not(.game-status) {
+  max-width: 38ch;
 }
 
 .book-shelf {
@@ -1700,6 +1808,18 @@ body.lightbox-open {
 }
 
 @media (max-width: 620px) {
+  .game-card {
+    grid-template-columns: 1fr;
+  }
+
+  .game-card-art {
+    min-height: 0;
+  }
+
+  .game-card-art .wally-portrait {
+    width: min(250px, 100%);
+  }
+
   .site-wrap {
     width: min(94vw, 540px);
     margin-top: 0.8rem;
@@ -1935,15 +2055,15 @@ body.lightbox-open {
 
   .nav-links {
     width: 100%;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    gap: 0.2rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.4rem;
   }
 
   .nav-link {
     flex: 0 1 auto;
-    padding: 0.38rem clamp(0.28rem, 1.5vw, 0.5rem);
-    font-size: clamp(0.75rem, 3.6vw, 0.9rem);
+    padding: 0.38rem 0.65rem;
+    font-size: 0.9rem;
     white-space: nowrap;
   }
 
