@@ -46,6 +46,16 @@
 
 .wally-distance { color: #495674; font-size: 0.95rem; }
 
+.wally-snack-stats {
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: #fff1bf;
+  color: #72500c;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
 .wally-control-button {
   font: inherit;
   font-size: 0.95rem;

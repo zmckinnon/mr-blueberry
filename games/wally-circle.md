@@ -19,6 +19,7 @@ stylesheets:
     <div class="wally-toolbar-info">
       <span class="wally-version">Early version</span>
       <span class="wally-distance" data-distance>0 m explored</span>
+      <span class="wally-snack-stats"><span aria-hidden="true">🍌</span> <span data-snacks role="status">0 bananas · Size 1.00×</span></span>
     </div>
     <div class="wally-toolbar-actions">
       <button class="wally-control-button" type="button" data-pause disabled>Pause</button>
@@ -57,6 +58,6 @@ stylesheets:
   <noscript><p class="wally-noscript">Turn on JavaScript to play Wally Circle. The game runs right in your browser.</p></noscript>
 </section>
 
-<p class="wally-version-note">Stay inside the dark red circle. Step out, and you have 12 seconds to return before you need to restart. An early version, with more on the way.</p>
+<p class="wally-version-note">Keep eating, keep growing—there’s no size limit! Bananas return every 6 minutes of play. Stay inside the dark red circle—step out, and you have 12 seconds to return. An early version, with more on the way.</p>
 
 <script type="module" src="{{ '/assets/games/wally-circle/game.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>

@@ -82,14 +82,18 @@ export function createWorld(scene) {
 
   let previousX;
   let previousZ;
-  function update(x, z) {
+  function update(x, z, viewScale = 1) {
+    // Expand the ground with the camera so huge Wally never exposes its edges.
+    ground.scale.set(viewScale, viewScale, 1);
+    texture.repeat.set(40 * viewScale, 40 * viewScale);
     // Keep the world boundary fixed around the starting point as Wally explores.
     safeCircle.position.set(-x, 0.025, -z);
     const anchorX = chunkAnchor(x);
     const anchorZ = chunkAnchor(z);
     // Keep all GPU coordinates near zero, even after hours of wandering.
     scenery.position.set(anchorX.offset, 0, anchorZ.offset);
-    texture.offset.set(((x / 8) % 1 + 1) % 1, ((-z / 8) % 1 + 1) % 1);
+    const textureOrigin = (40 - texture.repeat.x) / 2;
+    texture.offset.set(((x / 8 + textureOrigin) % 1 + 1) % 1, ((-z / 8 + textureOrigin) % 1 + 1) % 1);
     if (anchorX.index === previousX && anchorZ.index === previousZ) return;
     previousX = anchorX.index;
     previousZ = anchorZ.index;

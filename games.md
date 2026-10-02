@@ -18,7 +18,7 @@ image: /assets/characters/wally-face.png
     <div class="game-card-copy">
       <p class="eyebrow">Starring your favorite walrus</p>
       <h2 id="wally-circle-title">Wally Circle</h2>
-      <p>Keep Wally inside the dark red circle. Step out, and you have 12 seconds to get back!</p>
+      <p>Eat yellow bananas to help Wally grow! Explore inside the dark red circle, and get back within 12 seconds if you step out.</p>
       <p class="game-status" id="wally-circle-status">Early version</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="{{ '/games/wally-circle/' | relative_url }}" aria-describedby="wally-circle-status">Play Wally Circle <span aria-hidden="true">&rarr;</span></a>

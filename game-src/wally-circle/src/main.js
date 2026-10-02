@@ -4,6 +4,9 @@ import { createWorld } from './world.js';
 import { createControls } from './controls.js';
 import { createMovement, moveWally } from './movement.js';
 import { createChallenge, updateChallenge, OUTSIDE_SECONDS } from './challenge.js';
+import { createFood, advanceFood, eatBananas } from './food.js';
+import { createBananas } from './bananas.js';
+import { getGrowthView } from './view.js';
 import './game.css';
 
 const root = document.querySelector('[data-wally-game]');
@@ -20,6 +23,7 @@ function boot(root) {
   const resetButton = root.querySelector('[data-reset]');
   const joystick = root.querySelector('.wally-joystick');
   const distanceLabel = root.querySelector('[data-distance]');
+  const snackLabel = root.querySelector('[data-snacks]');
   const status = root.querySelector('[data-status]');
   const boundaryHud = root.querySelector('[data-boundary-hud]');
   const safeMessage = root.querySelector('[data-safe-message]');
@@ -29,6 +33,9 @@ function boot(root) {
   let controls;
   let state = createMovement();
   let challenge = createChallenge();
+  let food = createFood();
+  let displayedSize = 1;
+  let viewScale = 1;
   let running = false;
   let ready = false;
   let failed = false;
@@ -37,6 +44,8 @@ function boot(root) {
   let camera;
   let wally;
   let world;
+  let bananas;
+  let sun;
   let resizeObserver;
 
   function render() {
@@ -46,8 +55,21 @@ function boot(root) {
     const onTitle = root.dataset.state === 'title';
     const wide = host.clientWidth >= 700;
     const offset = onTitle && wide ? -3.3 : 0;
-    camera.position.set(offset, 11, 15);
-    camera.lookAt(offset, onTitle && !wide ? 3.1 : 0.8, 0);
+    const view = getGrowthView(displayedSize, camera.aspect);
+    viewScale = view.scale;
+    camera.position.set(offset, view.cameraHeight, view.cameraDepth);
+    camera.lookAt(offset, onTitle && !wide ? 3.1 : view.targetHeight, 0);
+    camera.near = view.near;
+    camera.far = view.far;
+    camera.updateProjectionMatrix();
+    scene.fog.near = view.fogNear;
+    scene.fog.far = view.fogFar;
+    world.update(state.x, state.z, viewScale);
+    sun.position.set(-5, 9, 5).multiplyScalar(displayedSize);
+    const shadowRange = Math.max(5, displayedSize * 3);
+    sun.shadow.normalBias = 0.035 * displayedSize;
+    Object.assign(sun.shadow.camera, { left: -shadowRange, right: shadowRange, top: shadowRange, bottom: -shadowRange, near: 0.5 * displayedSize, far: 30 * displayedSize });
+    sun.shadow.camera.updateProjectionMatrix();
   }
   function resize() {
     const width = Math.max(1, host.clientWidth);
@@ -64,8 +86,19 @@ function boot(root) {
     previousTime = time;
     const speed = moveWally(state, controls.read(), dt);
     updateChallenge(challenge, state, dt);
+    if (!challenge.gameOver) {
+      advanceFood(food, dt);
+      if (eatBananas(food, state)) updateSnackHud();
+    }
+    if (displayedSize !== food.size) {
+      displayedSize += (food.size - displayedSize) * (1 - Math.exp(-8 * Math.min(dt, 0.05)));
+      if (Math.abs(food.size - displayedSize) < 0.001) displayedSize = food.size;
+      wally.model.scale.setScalar(displayedSize);
+      positionCamera();
+    }
     wally.animate(state, speed);
-    world.update(state.x, state.z);
+    world.update(state.x, state.z, viewScale);
+    bananas.update(food, state, scene.fog.far + 15);
     const distance = `${Math.floor(state.distance)} m explored`;
     if (distanceLabel.textContent !== distance) distanceLabel.textContent = distance;
     updateBoundaryHud();
@@ -85,11 +118,20 @@ function boot(root) {
       if (status.textContent !== message) status.textContent = message;
     }
   }
+  function updateSnackHud() {
+    snackLabel.textContent = `${food.eaten} ${food.eaten === 1 ? 'banana' : 'bananas'} · Size ${food.size.toFixed(2)}×`;
+  }
   function resetRound() {
     state = createMovement();
     challenge = createChallenge();
+    food = createFood();
+    displayedSize = 1;
+    wally.model.scale.setScalar(1);
+    positionCamera();
+    updateSnackHud();
     distanceLabel.textContent = '0 m explored';
-    world.update(0, 0);
+    world.update(0, 0, viewScale);
+    bananas.update(food, state, scene.fog.far + 15);
     wally.animate(state, 0);
     updateBoundaryHud();
   }
@@ -185,11 +227,11 @@ function boot(root) {
     const canvas = renderer.domElement;
     canvas.tabIndex = 0;
     canvas.setAttribute('role', 'img');
-    canvas.setAttribute('aria-label', 'Wally’s 3D meadow. Stay inside the dark red circle. Use arrow keys or WASD to move, and Escape to pause.');
+    canvas.setAttribute('aria-label', 'Wally’s 3D meadow. Eat yellow bananas to grow and stay inside the dark red circle. Use arrow keys or WASD to move, and Escape to pause.');
     canvas.setAttribute('aria-describedby', 'wally-controls-help');
     host.append(canvas);
     scene.add(new THREE.HemisphereLight('#fff7df', '#769158', 2.4));
-    const sun = new THREE.DirectionalLight('#fff1ce', 3);
+    sun = new THREE.DirectionalLight('#fff1ce', 3);
     sun.position.set(-5, 9, 5);
     sun.castShadow = true;
     sun.shadow.mapSize.set(1024, 1024);
@@ -198,6 +240,8 @@ function boot(root) {
     sun.shadow.bias = -0.00015;
     scene.add(sun);
     world = createWorld(scene);
+    bananas = createBananas(scene, food.items.length);
+    bananas.update(food, state, scene.fog.far + 15);
     wally = createWally();
     scene.add(wally.model);
     controls = createControls({ canvas, joystick, isRunning: () => running, pause });
@@ -205,7 +249,7 @@ function boot(root) {
     ready = true;
     root.dataset.state = 'title';
     title.textContent = 'Wally Circle';
-    description.textContent = `Stay inside the dark red circle. If you step out, you have ${OUTSIDE_SECONDS} seconds to get back!`;
+    description.textContent = `Eat yellow bananas to grow! Stay inside the dark red circle—step out, and you have ${OUTSIDE_SECONDS} seconds to get back.`;
     playButton.textContent = 'Play Wally Circle';
     playButton.disabled = false;
     resetButton.disabled = false;
