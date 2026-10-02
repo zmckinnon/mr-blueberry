@@ -28,7 +28,7 @@ stylesheets:
   </div>
   <div class="wally-stage">
     <div class="wally-canvas-host"></div>
-    <p class="wally-chest-reward" data-chest-reward role="status" hidden></p>
+    <p class="wally-pickup-reward" data-pickup-reward role="status" hidden></p>
     <div class="wally-boundary-hud" data-boundary-hud data-zone="safe" hidden>
       <p class="wally-safe-message" data-safe-message>Safe inside the circle</p>
       <div class="wally-boundary-warning" data-boundary-warning hidden>
@@ -59,6 +59,6 @@ stylesheets:
   <noscript><p class="wally-noscript">Turn on JavaScript to play Wally Circle. The game runs right in your browser.</p></noscript>
 </section>
 
-<p class="wally-version-note">Small Wally is super fast. The bigger he gets, the slower he moves! Touch white chests to open them for 9 bananas each. Keep eating, keep growing—there’s no size limit! Bananas return every 6 minutes of play. Step outside the dark red circle, and you have 12 seconds to return. This is an early version.</p>
+<p class="wally-version-note">Small Wally is super fast. The bigger he gets, the slower he moves! Catch the 3 monkeys carrying bananas for +20 bananas each. Touch white chests for 9 bananas each. The meadow has 1,981 bananas, and they return every 2 minutes of play. Keep eating, keep growing—there’s no size limit! Start over to bring back caught monkeys and opened chests. Step outside the dark red circle, and you have 12 seconds to return.</p>
 
 <script type="module" src="{{ '/assets/games/wally-circle/game.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>

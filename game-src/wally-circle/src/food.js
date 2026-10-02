@@ -1,7 +1,8 @@
 import { SAFE_RADIUS } from './challenge.js';
 
 export const BANANA_EDGE_MARGIN = 2;
-export const BANANA_RESET_SECONDS = 6 * 60;
+export const BANANA_RESET_SECONDS = 2 * 60;
+export const BANANA_COUNT = 1981;
 
 export function sizeForBananas(eaten) {
   // Every snack adds volume. There is no maximum size or per-round growth limit.
@@ -30,10 +31,9 @@ export function createFood() {
       if (radius > 9 && radius <= SAFE_RADIUS - BANANA_EDGE_MARGIN) items.push(point);
     }
   }
-  // Triple the original field, filling the gaps without stacking fruit or blocking spawn.
-  const targetCount = items.length * 3;
+  // 59 fewer than the previous 2,040, keeping the easy first snacks and spacing.
   const outerRadius = SAFE_RADIUS - BANANA_EDGE_MARGIN;
-  while (items.length < targetCount) {
+  while (items.length < BANANA_COUNT) {
     const angle = random() * Math.PI * 2;
     const radius = Math.sqrt(9 + random() * (outerRadius ** 2 - 9));
     const point = { x: Math.cos(angle) * radius, z: Math.sin(angle) * radius };
@@ -51,7 +51,7 @@ export function createFood() {
 
 export function advanceFood(food, seconds) {
   food.refillElapsed += Number.isFinite(seconds) ? Math.max(0, seconds) : 0;
-  // Keep a shared six-minute schedule, even when a frame crosses the deadline.
+  // Keep a shared two-minute schedule, even when a frame crosses the deadline.
   const refills = Math.floor((food.refillElapsed + 1e-9) / BANANA_RESET_SECONDS);
   if (!refills) return false;
   food.refillElapsed = Math.max(0, food.refillElapsed - refills * BANANA_RESET_SECONDS);

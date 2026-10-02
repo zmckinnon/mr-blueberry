@@ -50,7 +50,7 @@ test('banana refills keep chests open, while a new round restores their rewards'
   const food = createFood();
   const chests = createChestState(food.items);
   openChests(chests, food, chests.items[0]);
-  advanceFood(food, 360);
+  advanceFood(food, 120);
   assert.equal(openChests(chests, food, chests.items[0]), 0);
   assert.equal(food.eaten, 9);
   const restartedFood = createFood();

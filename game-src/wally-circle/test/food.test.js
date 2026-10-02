@@ -7,7 +7,7 @@ import { SAFE_RADIUS } from '../src/challenge.js';
 
 test('bananas cover the world but stay entirely inside the boundary', () => {
   const food = createFood();
-  assert.equal(food.items.length, 680 * 3);
+  assert.equal(food.items.length, 2040 - 59);
   for (const banana of food.items) {
     assert.ok(Math.hypot(banana.x, banana.z) <= SAFE_RADIUS - BANANA_EDGE_MARGIN);
   }
@@ -59,11 +59,11 @@ test('a long round counts every banana once, and restart restores the field and 
   assert.deepEqual(restarted.items.map(({ x, z }) => ({ x, z })), food.items.map(({ x, z }) => ({ x, z })));
 });
 
-test('all bananas return together at six minutes without resetting size or count', () => {
+test('all bananas return together at two minutes without resetting size or count', () => {
   const food = createFood();
   const originalPositions = food.items.map(({ x, z }) => ({ x, z }));
   eatBananas(food, food.items[0]);
-  assert.equal(advanceFood(food, 359), false);
+  assert.equal(advanceFood(food, 119), false);
   eatBananas(food, food.items[1]);
   const { eaten, size } = food;
   assert.equal(food.items[0].eaten, true);
@@ -78,16 +78,16 @@ test('all bananas return together at six minutes without resetting size or count
   assert.ok(food.size > size);
 });
 
-test('refills repeat every six minutes and retain extra time from delayed frames', () => {
+test('refills repeat every two minutes and retain extra time from delayed frames', () => {
   const food = createFood();
-  assert.equal(advanceFood(food, 365), true);
+  assert.equal(advanceFood(food, 125), true);
   eatBananas(food, food.items[0]);
-  assert.equal(advanceFood(food, 354), false);
+  assert.equal(advanceFood(food, 114), false);
   assert.equal(food.items[0].eaten, true);
   assert.equal(advanceFood(food, 1), true);
   assert.equal(food.items[0].eaten, false);
   eatBananas(food, food.items[0]);
-  assert.equal(advanceFood(food, 1085), true);
+  assert.equal(advanceFood(food, 365), true);
   assert.equal(food.refillElapsed, 5);
   eatBananas(food, food.items[0]);
   assert.equal(advanceFood(food, 0), false);
@@ -95,7 +95,7 @@ test('refills repeat every six minutes and retain extra time from delayed frames
 });
 
 test('growth has no gameplay ceiling and continues across repeated full-field refills', () => {
-  for (const count of [0, 100, 2040, 1e6, 1e12]) {
+  for (const count of [0, 100, 1981, 1e6, 1e12]) {
     assert.ok(Number.isFinite(sizeForBananas(count)));
     assert.ok(sizeForBananas(count + 1) > sizeForBananas(count));
   }
@@ -107,7 +107,7 @@ test('growth has no gameplay ceiling and continues across repeated full-field re
     assert.equal(food.eaten, food.items.length * round);
     assert.ok(food.size > previousSize);
     previousSize = food.size;
-    advanceFood(food, 360);
+    advanceFood(food, 120);
     assert.equal(food.size, previousSize);
   }
 });
@@ -116,7 +116,7 @@ test('refill timing is frame-rate independent and zero-time resume does not adva
   for (const fps of [30, 60, 144]) {
     const food = createFood();
     eatBananas(food, food.items[0]);
-    for (let frame = 0; frame < fps * 360 - 1; frame++) assert.equal(advanceFood(food, 1 / fps), false);
+    for (let frame = 0; frame < fps * 120 - 1; frame++) assert.equal(advanceFood(food, 1 / fps), false);
     // Paused games do not update; resuming starts with a zero-time frame.
     for (const seconds of [0, -1, NaN, Infinity]) assert.equal(advanceFood(food, seconds), false);
     assert.equal(food.items[0].eaten, true);
@@ -125,7 +125,7 @@ test('refill timing is frame-rate independent and zero-time resume does not adva
   }
   const restarted = createFood();
   assert.equal(restarted.refillElapsed, 0);
-  assert.equal(advanceFood(restarted, 359), false);
+  assert.equal(advanceFood(restarted, 119), false);
   assert.equal(advanceFood(restarted, 1), true);
 });
 
@@ -147,7 +147,7 @@ test('the banana renderer removes eaten fruit and follows the player without mov
   renderer.update(food, player, 1);
   assert.equal(fruit.count, 0);
   assert.equal(tips.count, 0);
-  advanceFood(food, 360);
+  advanceFood(food, 120);
   renderer.update(food, player, 1);
   assert.equal(fruit.count, 1);
   assert.equal(tips.count, 2);
