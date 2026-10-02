@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { chunkAnchor, CHUNK_SIZE } from './movement.js';
+import { SAFE_RADIUS } from './challenge.js';
 
 function randomFor(x, z) {
   let seed = (Math.imul(x, 374761393) ^ Math.imul(z, 668265263)) >>> 0;
@@ -44,6 +45,13 @@ export function createWorld(scene) {
   ground.receiveShadow = true;
   scene.add(ground);
 
+  const safeCircle = new THREE.Mesh(
+    new THREE.RingGeometry(SAFE_RADIUS, SAFE_RADIUS + 0.75, 512),
+    new THREE.MeshBasicMaterial({ color: '#781c2b', side: THREE.DoubleSide, toneMapped: false }),
+  );
+  safeCircle.rotation.x = -Math.PI / 2;
+  scene.add(safeCircle);
+
   const scenery = new THREE.Group();
   scene.add(scenery);
   const tileCount = 81;
@@ -75,6 +83,8 @@ export function createWorld(scene) {
   let previousX;
   let previousZ;
   function update(x, z) {
+    // Keep the world boundary fixed around the starting point as Wally explores.
+    safeCircle.position.set(-x, 0.025, -z);
     const anchorX = chunkAnchor(x);
     const anchorZ = chunkAnchor(z);
     // Keep all GPU coordinates near zero, even after hours of wandering.

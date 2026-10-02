@@ -3,6 +3,7 @@ import { createWally } from './wally.js';
 import { createWorld } from './world.js';
 import { createControls } from './controls.js';
 import { createMovement, moveWally } from './movement.js';
+import { createChallenge, updateChallenge, OUTSIDE_SECONDS } from './challenge.js';
 import './game.css';
 
 const root = document.querySelector('[data-wally-game]');
@@ -20,9 +21,14 @@ function boot(root) {
   const joystick = root.querySelector('.wally-joystick');
   const distanceLabel = root.querySelector('[data-distance]');
   const status = root.querySelector('[data-status]');
+  const boundaryHud = root.querySelector('[data-boundary-hud]');
+  const safeMessage = root.querySelector('[data-safe-message]');
+  const warning = root.querySelector('[data-boundary-warning]');
+  const countdown = root.querySelector('[data-countdown]');
   let renderer;
   let controls;
   let state = createMovement();
+  let challenge = createChallenge();
   let running = false;
   let ready = false;
   let failed = false;
@@ -57,23 +63,65 @@ function boot(root) {
     const dt = previousTime === undefined ? 0 : (time - previousTime) / 1000;
     previousTime = time;
     const speed = moveWally(state, controls.read(), dt);
+    updateChallenge(challenge, state, dt);
     wally.animate(state, speed);
     world.update(state.x, state.z);
     const distance = `${Math.floor(state.distance)} m explored`;
     if (distanceLabel.textContent !== distance) distanceLabel.textContent = distance;
+    updateBoundaryHud();
+    if (challenge.gameOver) { endRound(); return; }
     render();
+  }
+  function updateBoundaryHud() {
+    boundaryHud.dataset.zone = challenge.outside ? 'outside' : 'safe';
+    safeMessage.hidden = challenge.outside;
+    warning.hidden = !challenge.outside;
+    const seconds = String(Math.ceil(challenge.remaining));
+    if (countdown.textContent !== seconds) countdown.textContent = seconds;
+    if (running) {
+      const message = challenge.outside
+        ? (challenge.remaining <= 3 ? `${seconds} seconds! Get back inside the circle.` : 'Outside the circle! Get back before time runs out.')
+        : 'Safe inside the circle';
+      if (status.textContent !== message) status.textContent = message;
+    }
+  }
+  function resetRound() {
+    state = createMovement();
+    challenge = createChallenge();
+    distanceLabel.textContent = '0 m explored';
+    world.update(0, 0);
+    wally.animate(state, 0);
+    updateBoundaryHud();
+  }
+  function endRound() {
+    running = false;
+    controls.clear();
+    renderer.setAnimationLoop(null);
+    root.dataset.state = 'gameover';
+    overlay.hidden = false;
+    joystick.hidden = true;
+    boundaryHud.hidden = true;
+    title.textContent = 'Time’s up!';
+    description.textContent = `Wally stayed outside the circle for ${OUTSIDE_SECONDS} seconds. Restart to try again.`;
+    playButton.textContent = 'Restart';
+    pauseButton.disabled = true;
+    status.textContent = 'Time’s up. Restart to play again.';
+    render();
+    playButton.focus({ preventScroll: true });
   }
   function play() {
     if (failed) { window.location.reload(); return; }
     if (!ready) return;
+    if (challenge.gameOver) resetRound();
     controls.clear();
     root.dataset.state = 'playing';
     running = true;
     overlay.hidden = true;
     joystick.hidden = false;
+    boundaryHud.hidden = false;
     pauseButton.disabled = false;
     pauseButton.textContent = 'Pause';
-    status.textContent = 'Exploring';
+    updateBoundaryHud();
     positionCamera();
     previousTime = undefined;
     renderer.domElement.focus({ preventScroll: true });
@@ -88,7 +136,9 @@ function boot(root) {
     overlay.hidden = false;
     joystick.hidden = true;
     title.textContent = 'Taking a breather.';
-    description.textContent = 'The meadow will be right here when you’re ready.';
+    description.textContent = challenge.outside
+      ? 'Your countdown is paused. Get back inside the circle when you resume.'
+      : 'The circle will be right here when you’re ready.';
     playButton.textContent = 'Keep exploring';
     pauseButton.textContent = 'Resume';
     status.textContent = 'Paused';
@@ -103,6 +153,7 @@ function boot(root) {
     root.dataset.state = 'error';
     overlay.hidden = false;
     joystick.hidden = true;
+    boundaryHud.hidden = true;
     title.textContent = 'Wally needs a hand.';
     description.textContent = 'The 3D meadow couldn’t start. Try refreshing, or use a browser with WebGL 2 enabled.';
     playButton.textContent = 'Try again';
@@ -116,10 +167,7 @@ function boot(root) {
   pauseButton.addEventListener('click', () => running ? pause(true) : play());
   resetButton.addEventListener('click', () => {
     if (!ready || failed) return;
-    state = createMovement();
-    distanceLabel.textContent = '0 m explored';
-    world.update(0, 0);
-    wally.animate(state, 0);
+    resetRound();
     play();
   });
 
@@ -137,7 +185,7 @@ function boot(root) {
     const canvas = renderer.domElement;
     canvas.tabIndex = 0;
     canvas.setAttribute('role', 'img');
-    canvas.setAttribute('aria-label', 'Wally’s 3D meadow. Use arrow keys or WASD to move, and Escape to pause.');
+    canvas.setAttribute('aria-label', 'Wally’s 3D meadow. Stay inside the dark red circle. Use arrow keys or WASD to move, and Escape to pause.');
     canvas.setAttribute('aria-describedby', 'wally-controls-help');
     host.append(canvas);
     scene.add(new THREE.HemisphereLight('#fff7df', '#769158', 2.4));
@@ -157,7 +205,7 @@ function boot(root) {
     ready = true;
     root.dataset.state = 'title';
     title.textContent = 'Wally Circle';
-    description.textContent = 'A whole meadow, just for Wally. Pick a direction and make yourself at home.';
+    description.textContent = `Stay inside the dark red circle. If you step out, you have ${OUTSIDE_SECONDS} seconds to get back!`;
     playButton.textContent = 'Play Wally Circle';
     playButton.disabled = false;
     resetButton.disabled = false;

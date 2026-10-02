@@ -27,9 +27,16 @@ stylesheets:
   </div>
   <div class="wally-stage">
     <div class="wally-canvas-host"></div>
+    <div class="wally-boundary-hud" data-boundary-hud data-zone="safe" hidden>
+      <p class="wally-safe-message" data-safe-message>Safe inside the circle</p>
+      <div class="wally-boundary-warning" data-boundary-warning hidden>
+        <p>Get back in the circle!</p>
+        <span class="wally-countdown" role="timer" aria-label="Seconds remaining to return to the circle"><span data-countdown>12</span><span class="wally-countdown-unit">s</span></span>
+      </div>
+    </div>
     <div class="wally-overlay">
       <div class="wally-title-card">
-        <p class="eyebrow">Early version &middot; Free roam</p>
+        <p class="eyebrow">Early version &middot; Circle challenge</p>
         <h2 data-overlay-title>Getting Wally ready&hellip;</h2>
         <p data-overlay-description>Loading the meadow. If this takes a while, try refreshing the page.</p>
         <button class="btn btn-primary wally-play" type="button" data-play disabled>Loading&hellip;</button>
@@ -44,12 +51,12 @@ stylesheets:
     </button>
   </div>
   <div class="wally-controls-help" id="wally-controls-help">
-    <p><strong>Move:</strong> WASD, arrow keys, or drag the circle. Release to stop. Esc to pause.</p>
+    <p><strong>Move:</strong> WASD, arrow keys, or drag the joystick. Release to stop. Esc to pause.</p>
     <p class="wally-status" data-status role="status">Loading meadow&hellip;</p>
   </div>
   <noscript><p class="wally-noscript">Turn on JavaScript to play Wally Circle. The game runs right in your browser.</p></noscript>
 </section>
 
-<p class="wally-version-note">This is Wally's first playable version: a meadow to explore, with more game features on the way.</p>
+<p class="wally-version-note">Stay inside the dark red circle. Step out, and you have 12 seconds to return before you need to restart. An early version, with more on the way.</p>
 
 <script type="module" src="{{ '/assets/games/wally-circle/game.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>

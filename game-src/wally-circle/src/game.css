@@ -115,9 +115,52 @@
 
 .wally-play:disabled { opacity: 0.6; cursor: wait; }
 .wally-game[data-state="paused"] .wally-overlay,
+.wally-game[data-state="gameover"] .wally-overlay,
 .wally-game[data-state="error"] .wally-overlay { justify-content: center; background: rgba(222, 239, 229, 0.6); }
 .wally-game[data-state="paused"] .wally-title-card,
+.wally-game[data-state="gameover"] .wally-title-card,
 .wally-game[data-state="error"] .wally-title-card { width: min(390px, 100%); text-align: center; }
+
+.wally-game[data-state="gameover"] .wally-title-card { border-color: #be7480; }
+.wally-game[data-state="gameover"] .wally-title-card h2 { color: #781c2b; }
+
+.wally-boundary-hud {
+  position: absolute;
+  z-index: 1;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 2rem);
+  width: max-content;
+  text-align: center;
+  pointer-events: none;
+}
+
+.wally-safe-message {
+  padding: 0.4rem 0.9rem;
+  border: 2px solid #ffffffb3;
+  border-radius: 999px;
+  background: #fffef5e8;
+  color: #36542c;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.wally-boundary-warning {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.55rem 1rem;
+  border: 2px solid #fff3e2;
+  border-radius: 18px;
+  background: #781c2b;
+  color: #fffdf0;
+  box-shadow: 0 5px 18px #4b111a33;
+}
+
+.wally-boundary-warning p { font-size: 1rem; font-weight: 700; }
+.wally-countdown { font-size: 2.6rem; line-height: 1; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.wally-countdown-unit { font-size: 1rem; margin-left: 0.15rem; }
 
 .wally-joystick {
   position: absolute;
@@ -179,6 +222,7 @@
   .wally-title-card p:not(.eyebrow) { font-size: 1rem; }
   .wally-play { margin-top: 0.7rem; }
   .wally-game[data-state="paused"] .wally-overlay,
+  .wally-game[data-state="gameover"] .wally-overlay,
   .wally-game[data-state="error"] .wally-overlay { align-items: center; }
 }
 
