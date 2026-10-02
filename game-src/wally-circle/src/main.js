@@ -90,7 +90,7 @@ function boot(root) {
   function animate(time) {
     const dt = previousTime === undefined ? 0 : (time - previousTime) / 1000;
     previousTime = time;
-    const speed = moveWally(state, controls.read(), dt);
+    const speed = moveWally(state, controls.read(), dt, displayedSize);
     updateChallenge(challenge, state, dt);
     if (!challenge.gameOver) {
       advanceFood(food, dt);

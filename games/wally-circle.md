@@ -59,6 +59,6 @@ stylesheets:
   <noscript><p class="wally-noscript">Turn on JavaScript to play Wally Circle. The game runs right in your browser.</p></noscript>
 </section>
 
-<p class="wally-version-note">Touch white chests to open them for 9 bananas each. Keep eating, keep growing—there’s no size limit! Bananas return every 6 minutes of play. Step outside the dark red circle, and you have 12 seconds to return. This is an early version.</p>
+<p class="wally-version-note">Small Wally is super fast. The bigger he gets, the slower he moves! Touch white chests to open them for 9 bananas each. Keep eating, keep growing—there’s no size limit! Bananas return every 6 minutes of play. Step outside the dark red circle, and you have 12 seconds to return. This is an early version.</p>
 
 <script type="module" src="{{ '/assets/games/wally-circle/game.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>

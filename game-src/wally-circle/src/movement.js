@@ -1,4 +1,5 @@
-export const MOVE_SPEED = 5;
+export const MOVE_SPEED = 18;
+export const MIN_MOVE_SPEED = 0.6;
 export const CHUNK_SIZE = 12;
 
 export function createMovement() {
@@ -10,11 +11,16 @@ export function normalizeInput(x, z) {
   return { x: x / divisor, z: z / divisor };
 }
 
-export function moveWally(state, input, elapsed) {
+export function speedForSize(size = 1) {
+  // Small Wally races around; growth quickly slows him to a steady crawl.
+  return MIN_MOVE_SPEED + (MOVE_SPEED - MIN_MOVE_SPEED) / Math.max(1, size) ** 2;
+}
+
+export function moveWally(state, input, elapsed, size = 1) {
   // Discard long gaps after a suspended tab instead of teleporting the player.
   const dt = Number.isFinite(elapsed) ? Math.max(0, Math.min(elapsed, 0.05)) : 0;
   const direction = normalizeInput(input.x, input.z);
-  const distance = MOVE_SPEED * dt;
+  const distance = speedForSize(size) * dt;
   state.x += direction.x * distance;
   state.z += direction.z * distance;
   const speed = Math.hypot(direction.x, direction.z);

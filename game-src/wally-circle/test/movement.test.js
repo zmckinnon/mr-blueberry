@@ -1,34 +1,68 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createMovement, moveWally, normalizeInput, chunkAnchor, CHUNK_SIZE, MOVE_SPEED } from '../src/movement.js';
+import { createMovement, moveWally, normalizeInput, chunkAnchor, speedForSize, CHUNK_SIZE, MOVE_SPEED, MIN_MOVE_SPEED } from '../src/movement.js';
 
 const near = (actual, expected) => assert.ok(Math.abs(actual - expected) < 0.000001, `${actual} should be near ${expected}`);
 
 test('keyboard diagonals have the same speed as a cardinal direction', () => {
-  const straight = createMovement();
-  const diagonal = createMovement();
-  moveWally(straight, { x: 1, z: 0 }, 0.02);
-  moveWally(diagonal, { x: 1, z: -1 }, 0.02);
-  near(straight.distance, diagonal.distance);
-  near(Math.hypot(diagonal.x, diagonal.z), MOVE_SPEED * 0.02);
+  for (const size of [1, 2, 8, 1000]) {
+    const straight = createMovement();
+    const diagonal = createMovement();
+    moveWally(straight, { x: 1, z: 0 }, 0.02, size);
+    moveWally(diagonal, { x: 1, z: -1 }, 0.02, size);
+    near(straight.distance, diagonal.distance);
+    near(Math.hypot(diagonal.x, diagonal.z), speedForSize(size) * 0.02);
+  }
 });
 
 test('analog input preserves arbitrary angles and partial speed', () => {
   const input = normalizeInput(0.3, -0.4);
-  const state = createMovement();
-  moveWally(state, input, 0.02);
-  near(state.x, 0.03);
-  near(state.z, -0.04);
-  near(state.distance, 0.05);
+  for (const size of [1, 2, 8, 1000]) {
+    const state = createMovement();
+    moveWally(state, input, 0.02, size);
+    const fullDistance = speedForSize(size) * 0.02;
+    near(state.x, fullDistance * 0.3);
+    near(state.z, fullDistance * -0.4);
+    near(state.distance, fullDistance * 0.5);
+  }
 });
 
 test('movement speed is independent of frame rate', () => {
-  const slow = createMovement();
-  const fast = createMovement();
-  for (let i = 0; i < 30; i++) moveWally(slow, { x: -1, z: 0 }, 1 / 30);
-  for (let i = 0; i < 144; i++) moveWally(fast, { x: -1, z: 0 }, 1 / 144);
-  near(slow.x, fast.x);
-  near(slow.x, -MOVE_SPEED);
+  for (const size of [1, 2, 8, 1000]) {
+    const slow = createMovement();
+    const fast = createMovement();
+    for (let i = 0; i < 30; i++) moveWally(slow, { x: -1, z: 0 }, 1 / 30, size);
+    for (let i = 0; i < 144; i++) moveWally(fast, { x: -1, z: 0 }, 1 / 144, size);
+    near(slow.x, fast.x);
+    near(slow.x, -speedForSize(size));
+  }
+});
+
+test('small Wally is fast and large Wally crawls without becoming stuck', () => {
+  for (const [size, expectedSpeed] of [[1, 18], [2, 4.95], [4, 1.6875], [8, 0.871875]]) {
+    const state = createMovement();
+    for (let i = 0; i < 60; i++) moveWally(state, { x: 1, z: 0 }, 1 / 60, size);
+    near(state.x, expectedSpeed);
+    near(state.distance, expectedSpeed);
+  }
+  assert.ok(speedForSize(8) < speedForSize(1) / 20);
+  for (const size of [1000, 1e6, 1e100]) {
+    const state = createMovement();
+    moveWally(state, { x: 0, z: 1 }, 0.05, size);
+    assert.ok(Number.isFinite(state.z));
+    assert.ok(state.z >= MIN_MOVE_SPEED * 0.05);
+    assert.ok(state.z < 0.031);
+  }
+});
+
+test('speed decreases smoothly through growth without sudden size thresholds', () => {
+  let previousSpeed = speedForSize(1);
+  for (let size = 1.01; size <= 12; size += 0.01) {
+    const speed = speedForSize(size);
+    assert.ok(speed < previousSpeed);
+    assert.ok(previousSpeed - speed < previousSpeed * 0.02);
+    previousSpeed = speed;
+  }
 });
 
 test('releasing controls stops immediately and suspended frames cannot teleport Wally', () => {
