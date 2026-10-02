@@ -6,6 +6,8 @@ import { createMovement, moveWally } from './movement.js';
 import { createChallenge, updateChallenge, OUTSIDE_SECONDS } from './challenge.js';
 import { createFood, advanceFood, eatBananas } from './food.js';
 import { createBananas } from './bananas.js';
+import { createChestState, openChests, CHEST_REWARD } from './chest-state.js';
+import { createChests } from './chests.js';
 import { getGrowthView } from './view.js';
 import './game.css';
 
@@ -24,6 +26,7 @@ function boot(root) {
   const joystick = root.querySelector('.wally-joystick');
   const distanceLabel = root.querySelector('[data-distance]');
   const snackLabel = root.querySelector('[data-snacks]');
+  const chestReward = root.querySelector('[data-chest-reward]');
   const status = root.querySelector('[data-status]');
   const boundaryHud = root.querySelector('[data-boundary-hud]');
   const safeMessage = root.querySelector('[data-safe-message]');
@@ -34,6 +37,8 @@ function boot(root) {
   let state = createMovement();
   let challenge = createChallenge();
   let food = createFood();
+  let chestState = createChestState(food.items);
+  let rewardRemaining = 0;
   let displayedSize = 1;
   let viewScale = 1;
   let running = false;
@@ -45,6 +50,7 @@ function boot(root) {
   let wally;
   let world;
   let bananas;
+  let chests;
   let sun;
   let resizeObserver;
 
@@ -88,7 +94,15 @@ function boot(root) {
     updateChallenge(challenge, state, dt);
     if (!challenge.gameOver) {
       advanceFood(food, dt);
-      if (eatBananas(food, state)) updateSnackHud();
+      rewardRemaining = Math.max(0, rewardRemaining - dt);
+      const eaten = eatBananas(food, state);
+      const opened = openChests(chestState, food, state);
+      if (eaten || opened) updateSnackHud();
+      if (opened) {
+        chestReward.textContent = `${opened === 1 ? 'Chest opened' : 'Chests opened'}! +${opened * CHEST_REWARD} bananas`;
+        rewardRemaining = 3;
+      }
+      chestReward.hidden = rewardRemaining === 0;
     }
     if (displayedSize !== food.size) {
       displayedSize += (food.size - displayedSize) * (1 - Math.exp(-8 * Math.min(dt, 0.05)));
@@ -99,6 +113,7 @@ function boot(root) {
     wally.animate(state, speed);
     world.update(state.x, state.z, viewScale);
     bananas.update(food, state, scene.fog.far + 15);
+    chests.update(chestState, state, scene.fog.far + 15, dt);
     const distance = `${Math.floor(state.distance)} m explored`;
     if (distanceLabel.textContent !== distance) distanceLabel.textContent = distance;
     updateBoundaryHud();
@@ -125,6 +140,9 @@ function boot(root) {
     state = createMovement();
     challenge = createChallenge();
     food = createFood();
+    chestState = createChestState(food.items);
+    rewardRemaining = 0;
+    chestReward.hidden = true;
     displayedSize = 1;
     wally.model.scale.setScalar(1);
     positionCamera();
@@ -132,6 +150,7 @@ function boot(root) {
     distanceLabel.textContent = '0 m explored';
     world.update(0, 0, viewScale);
     bananas.update(food, state, scene.fog.far + 15);
+    chests.update(chestState, state, scene.fog.far + 15);
     wally.animate(state, 0);
     updateBoundaryHud();
   }
@@ -140,6 +159,7 @@ function boot(root) {
     controls.clear();
     renderer.setAnimationLoop(null);
     root.dataset.state = 'gameover';
+    chestReward.hidden = true;
     overlay.hidden = false;
     joystick.hidden = true;
     boundaryHud.hidden = true;
@@ -175,6 +195,7 @@ function boot(root) {
     controls.clear();
     renderer.setAnimationLoop(null);
     root.dataset.state = 'paused';
+    chestReward.hidden = true;
     overlay.hidden = false;
     joystick.hidden = true;
     title.textContent = 'Taking a breather.';
@@ -193,6 +214,7 @@ function boot(root) {
     controls?.clear();
     renderer?.setAnimationLoop(null);
     root.dataset.state = 'error';
+    chestReward.hidden = true;
     overlay.hidden = false;
     joystick.hidden = true;
     boundaryHud.hidden = true;
@@ -227,7 +249,7 @@ function boot(root) {
     const canvas = renderer.domElement;
     canvas.tabIndex = 0;
     canvas.setAttribute('role', 'img');
-    canvas.setAttribute('aria-label', 'Wally’s 3D meadow. Eat yellow bananas to grow and stay inside the dark red circle. Use arrow keys or WASD to move, and Escape to pause.');
+    canvas.setAttribute('aria-label', 'Wally’s 3D meadow. Eat yellow bananas to grow. Touch white chests to open them for nine bananas. Stay inside the dark red circle. Use arrow keys or WASD to move, and Escape to pause.');
     canvas.setAttribute('aria-describedby', 'wally-controls-help');
     host.append(canvas);
     scene.add(new THREE.HemisphereLight('#fff7df', '#769158', 2.4));
@@ -242,6 +264,8 @@ function boot(root) {
     world = createWorld(scene);
     bananas = createBananas(scene, food.items.length);
     bananas.update(food, state, scene.fog.far + 15);
+    chests = createChests(scene, chestState.items.length);
+    chests.update(chestState, state, scene.fog.far + 15);
     wally = createWally();
     scene.add(wally.model);
     controls = createControls({ canvas, joystick, isRunning: () => running, pause });
@@ -249,7 +273,7 @@ function boot(root) {
     ready = true;
     root.dataset.state = 'title';
     title.textContent = 'Wally Circle';
-    description.textContent = `Eat yellow bananas to grow! Stay inside the dark red circle—step out, and you have ${OUTSIDE_SECONDS} seconds to get back.`;
+    description.textContent = `Eat bananas to grow. Touch a white chest for ${CHEST_REWARD} bananas! Stay inside the red circle, or get back within ${OUTSIDE_SECONDS} seconds.`;
     playButton.textContent = 'Play Wally Circle';
     playButton.disabled = false;
     resetButton.disabled = false;

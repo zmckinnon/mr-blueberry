@@ -68,6 +68,8 @@ Visit `http://127.0.0.1:4100/games/wally-circle/`. For live development, run `np
 
 The field contains 2,040 bananas, triple the original 680. Extra bananas fill the gaps with at least 2.5 units between centers and leave Wally's spawn clear.
 
+`src/chest-state.js` places 24 white treasure chests inside the circle, away from bananas and each other. Touching a chest opens it once per round and immediately adds exactly 9 bananas to the same total and growth calculation as loose fruit. A reward message confirms the pickup. `src/chests.js` renders shared chest geometry with animated hinged lids; opened chests remain visibly open. Banana refills do not refill chests. Restart restores all chests and resets rewards along with the rest of the round.
+
 Wally has no gameplay size limit, including across banana refills. `src/view.js` fits his full body on desktop and narrow screens as he grows, without reducing his world size. Camera clipping, fog, shadow coverage, and the ground's extent scale with him; grass texture density stays fixed. The circle stays the same size and still checks Wally's center, so growing beyond it does not automatically end the round.
 
 The early version supports WASD/arrow keys (including diagonals) and an analog pointer/touch joystick for any direction. Releasing controls stops Wally. Pause/Resume, Escape, and Start over are available. Switching away pauses the game. A fixed pool of scenery is recycled and render coordinates stay near Wally as he explores. Props are decorative and do not block movement.

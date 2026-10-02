@@ -8,6 +8,11 @@ export function sizeForBananas(eaten) {
   return Math.cbrt(1 + eaten * 0.6);
 }
 
+export function grantBananas(food, amount) {
+  food.eaten += amount;
+  food.size = sizeForBananas(food.eaten);
+}
+
 export function createFood() {
   // A few easy first snacks, followed by a repeatable spread across the whole world.
   const items = [
@@ -63,9 +68,6 @@ export function eatBananas(food, position) {
       collected++;
     }
   }
-  if (collected) {
-    food.eaten += collected;
-    food.size = sizeForBananas(food.eaten);
-  }
+  if (collected) grantBananas(food, collected);
   return collected;
 }

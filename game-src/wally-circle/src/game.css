@@ -172,6 +172,27 @@
 .wally-countdown { font-size: 2.6rem; line-height: 1; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .wally-countdown-unit { font-size: 1rem; margin-left: 0.15rem; }
 
+.wally-chest-reward {
+  position: absolute;
+  z-index: 1;
+  top: 6.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 2rem);
+  margin: 0;
+  padding: 0.55rem 0.85rem;
+  border: 2px solid #e2b841;
+  border-radius: 18px;
+  background: #fffbea;
+  color: #72500c;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 5px 18px #70551826;
+  pointer-events: none;
+}
+
 .wally-joystick {
   position: absolute;
   z-index: 1;

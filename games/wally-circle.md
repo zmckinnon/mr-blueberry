@@ -28,6 +28,7 @@ stylesheets:
   </div>
   <div class="wally-stage">
     <div class="wally-canvas-host"></div>
+    <p class="wally-chest-reward" data-chest-reward role="status" hidden></p>
     <div class="wally-boundary-hud" data-boundary-hud data-zone="safe" hidden>
       <p class="wally-safe-message" data-safe-message>Safe inside the circle</p>
       <div class="wally-boundary-warning" data-boundary-warning hidden>
@@ -58,6 +59,6 @@ stylesheets:
   <noscript><p class="wally-noscript">Turn on JavaScript to play Wally Circle. The game runs right in your browser.</p></noscript>
 </section>
 
-<p class="wally-version-note">Keep eating, keep growing—there’s no size limit! Bananas return every 6 minutes of play. Stay inside the dark red circle—step out, and you have 12 seconds to return. An early version, with more on the way.</p>
+<p class="wally-version-note">Touch white chests to open them for 9 bananas each. Keep eating, keep growing—there’s no size limit! Bananas return every 6 minutes of play. Step outside the dark red circle, and you have 12 seconds to return. This is an early version.</p>
 
 <script type="module" src="{{ '/assets/games/wally-circle/game.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
