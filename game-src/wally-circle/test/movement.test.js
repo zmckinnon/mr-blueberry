@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createMovement, moveWally, normalizeInput, chunkAnchor, speedForSize, CHUNK_SIZE, MOVE_SPEED, MIN_MOVE_SPEED } from '../src/movement.js';
+import { createMovement, moveWally, normalizeInput, chunkAnchor, speedForSize, CHUNK_SIZE, MOVE_SPEED } from '../src/movement.js';
 
 const near = (actual, expected) => assert.ok(Math.abs(actual - expected) < 0.000001, `${actual} should be near ${expected}`);
 
@@ -38,30 +38,12 @@ test('movement speed is independent of frame rate', () => {
   }
 });
 
-test('small Wally is fast and large Wally crawls without becoming stuck', () => {
-  for (const [size, expectedSpeed] of [[1, 18], [2, 4.95], [4, 1.6875], [8, 0.871875]]) {
+test('Wally keeps a slightly slower steady speed at every size', () => {
+  for (const size of [1, 2, 4, 8, 1000, 1e6, 1e100]) {
     const state = createMovement();
     for (let i = 0; i < 60; i++) moveWally(state, { x: 1, z: 0 }, 1 / 60, size);
-    near(state.x, expectedSpeed);
-    near(state.distance, expectedSpeed);
-  }
-  assert.ok(speedForSize(8) < speedForSize(1) / 20);
-  for (const size of [1000, 1e6, 1e100]) {
-    const state = createMovement();
-    moveWally(state, { x: 0, z: 1 }, 0.05, size);
-    assert.ok(Number.isFinite(state.z));
-    assert.ok(state.z >= MIN_MOVE_SPEED * 0.05);
-    assert.ok(state.z < 0.031);
-  }
-});
-
-test('speed decreases smoothly through growth without sudden size thresholds', () => {
-  let previousSpeed = speedForSize(1);
-  for (let size = 1.01; size <= 12; size += 0.01) {
-    const speed = speedForSize(size);
-    assert.ok(speed < previousSpeed);
-    assert.ok(previousSpeed - speed < previousSpeed * 0.02);
-    previousSpeed = speed;
+    near(state.x, 15);
+    near(state.distance, 15);
   }
 });
 

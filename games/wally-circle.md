@@ -37,7 +37,16 @@ stylesheets:
       </div>
     </div>
     <div class="wally-overlay">
+      <nav class="wally-start-nav" aria-label="Other pages">
+        <a href="{{ '/' | relative_url }}">Home</a>
+        <a href="{{ '/books/' | relative_url }}">Books</a>
+        <a href="{{ '/games/' | relative_url }}">Games</a>
+        <a href="{{ '/characters/' | relative_url }}">Characters</a>
+        <a href="{{ '/about/' | relative_url }}">About</a>
+        <a href="{{ site.merch_url }}" target="_blank" rel="noopener noreferrer">Merch</a>
+      </nav>
       <div class="wally-title-card">
+        <img class="wally-start-picture" src="{{ '/assets/characters/wally-face.png' | relative_url }}" alt="Wally" />
         <p class="eyebrow">Early version &middot; Circle challenge</p>
         <h2 data-overlay-title>Getting Wally ready&hellip;</h2>
         <p data-overlay-description>Loading the meadow. If this takes a while, try refreshing the page.</p>
@@ -59,6 +68,6 @@ stylesheets:
   <noscript><p class="wally-noscript">Turn on JavaScript to play Wally Circle. The game runs right in your browser.</p></noscript>
 </section>
 
-<p class="wally-version-note">Small Wally is super fast. The bigger he gets, the slower he moves! Catch the 3 monkeys carrying bananas for +20 bananas each. Touch white chests for 9 bananas each. The meadow has 1,981 bananas, and they return every 2 minutes of play. Keep eating, keep growing—there’s no size limit! Start over to bring back caught monkeys and opened chests. Step outside the dark red circle, and you have 12 seconds to return.</p>
+<p class="wally-version-note">Wally keeps the same steady speed as he grows. Catch the 11 monkeys carrying bananas for +20 bananas each. Touch white chests for 9 bananas each. The meadow has 1,981 bananas. Bananas, chests, and monkeys reset every 2 minutes of play, while Wally keeps his size and banana total. Keep eating, keep growing—there’s no size limit! Step outside the dark red circle, and you have 12 seconds to return.</p>
 
 <script type="module" src="{{ '/assets/games/wally-circle/game.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>

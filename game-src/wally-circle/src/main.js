@@ -97,7 +97,10 @@ function boot(root) {
     const speed = moveWally(state, controls.read(), dt, displayedSize);
     updateChallenge(challenge, state, dt);
     if (!challenge.gameOver) {
-      advanceFood(food, dt);
+      if (advanceFood(food, dt)) {
+        chestState = createChestState(food.items);
+        monkeyState = createMonkeyState();
+      }
       advanceMonkeys(monkeyState, dt);
       rewardRemaining = Math.max(0, rewardRemaining - dt);
       const eaten = eatBananas(food, state);
@@ -287,8 +290,8 @@ function boot(root) {
     ready = true;
     root.dataset.state = 'title';
     title.textContent = 'Wally Circle';
-    description.textContent = `Catch the 3 running monkeys for +${MONKEY_REWARD} bananas each! White chests give ${CHEST_REWARD} bananas. Stay inside the red circle, or get back within ${OUTSIDE_SECONDS} seconds.`;
-    playButton.textContent = 'Play Wally Circle';
+    description.textContent = `Catch the 11 running monkeys for +${MONKEY_REWARD} bananas each! White chests give ${CHEST_REWARD} bananas. Stay inside the red circle, or get back within ${OUTSIDE_SECONDS} seconds.`;
+    playButton.textContent = 'PLAY';
     playButton.disabled = false;
     resetButton.disabled = false;
     status.textContent = 'Ready to play';

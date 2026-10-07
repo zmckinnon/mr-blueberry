@@ -2,40 +2,62 @@ import { grantBananas } from './food.js';
 
 export const MONKEY_REWARD = 20;
 
-function positionMonkey(monkey) {
-  monkey.x = monkey.centerX + Math.cos(monkey.phase) * monkey.radiusX;
-  monkey.z = monkey.centerZ + Math.sin(monkey.phase) * monkey.radiusZ;
-  monkey.heading = Math.atan2(
-    -Math.sin(monkey.phase) * monkey.radiusX * monkey.pace,
-    Math.cos(monkey.phase) * monkey.radiusZ * monkey.pace,
-  );
+import { SAFE_RADIUS } from './challenge.js';
+
+export const MONKEY_COUNT = 11;
+const RUN_SPEED = 4.5;
+
+function nextDestination(monkey) {
+  // Each monkey has its own repeatable random stream for roaming the whole field.
+  const random = () => {
+    monkey.seed = (Math.imul(monkey.seed, 1664525) + 1013904223) >>> 0;
+    return monkey.seed / 4294967296;
+  };
+  const angle = random() * Math.PI * 2;
+  const radius = Math.sqrt(random()) * (SAFE_RADIUS - 4);
+  monkey.targetX = Math.cos(angle) * radius;
+  monkey.targetZ = Math.sin(angle) * radius;
 }
 
 export function createMonkeyState() {
-  // Three looping routes inside the circle. Small Wally can outrun them;
-  // big Wally can intercept them with his wider reach.
-  const routes = [
-    { centerX: -9, centerZ: -6, radiusX: 6, radiusZ: 4, phase: 0, pace: 0.65 },
-    { centerX: 15, centerZ: -14, radiusX: 9, radiusZ: 7, phase: Math.PI, pace: -0.5 },
-    { centerX: -20, centerZ: -29, radiusX: 11, radiusZ: 8, phase: Math.PI / 2, pace: 0.4 },
-  ];
   return {
-    items: routes.map(route => {
-      const monkey = { ...route, stride: 0, caught: false };
-      positionMonkey(monkey);
+    items: Array.from({ length: MONKEY_COUNT }, (_, index) => {
+      const angle = index * Math.PI * 2 / MONKEY_COUNT;
+      const radius = 24 + (index % 3) * 28;
+      const monkey = {
+        x: Math.cos(angle) * radius, z: Math.sin(angle) * radius,
+        heading: 0, stride: 0, caught: false, seed: 12345 + index * 7919,
+      };
+      nextDestination(monkey);
+      monkey.heading = Math.atan2(monkey.targetX - monkey.x, monkey.targetZ - monkey.z);
       return monkey;
     }),
   };
 }
 
 export function advanceMonkeys(monkeys, seconds) {
-  // Match Wally's movement cap so a delayed frame cannot teleport a monkey.
   const dt = Number.isFinite(seconds) ? Math.max(0, Math.min(seconds, 0.05)) : 0;
+  if (!dt) return;
   for (const monkey of monkeys.items) {
     if (monkey.caught) continue;
-    monkey.phase = (monkey.phase + monkey.pace * dt) % (Math.PI * 2);
+    let remaining = RUN_SPEED * dt;
+    while (remaining > 0) {
+      const dx = monkey.targetX - monkey.x;
+      const dz = monkey.targetZ - monkey.z;
+      const distance = Math.hypot(dx, dz);
+      if (distance <= remaining) {
+        monkey.x = monkey.targetX;
+        monkey.z = monkey.targetZ;
+        remaining -= distance;
+        nextDestination(monkey);
+      } else {
+        monkey.x += dx / distance * remaining;
+        monkey.z += dz / distance * remaining;
+        remaining = 0;
+      }
+    }
+    monkey.heading = Math.atan2(monkey.targetX - monkey.x, monkey.targetZ - monkey.z);
     monkey.stride = (monkey.stride + dt * 11) % (Math.PI * 2);
-    positionMonkey(monkey);
   }
 }
 

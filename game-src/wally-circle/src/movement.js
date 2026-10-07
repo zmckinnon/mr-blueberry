@@ -1,5 +1,4 @@
-export const MOVE_SPEED = 18;
-export const MIN_MOVE_SPEED = 0.6;
+export const MOVE_SPEED = 15;
 export const CHUNK_SIZE = 12;
 
 export function createMovement() {
@@ -11,9 +10,8 @@ export function normalizeInput(x, z) {
   return { x: x / divisor, z: z / divisor };
 }
 
-export function speedForSize(size = 1) {
-  // Small Wally races around; growth quickly slows him to a steady crawl.
-  return MIN_MOVE_SPEED + (MOVE_SPEED - MIN_MOVE_SPEED) / Math.max(1, size) ** 2;
+export function speedForSize() {
+  return MOVE_SPEED;
 }
 
 export function moveWally(state, input, elapsed, size = 1) {

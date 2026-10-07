@@ -263,3 +263,65 @@
   .wally-toolbar-actions { gap: 0.35rem; }
   .wally-control-button { padding-inline: 0.7rem; }
 }
+
+/* The game's welcome screen is a plain brown page with one play button. */
+.wally-game[data-state="title"] .wally-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #6b4226;
+  align-items: center;
+  justify-content: center;
+}
+.wally-game[data-state="title"] .wally-title-card {
+  width: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  text-align: center;
+}
+.wally-game[data-state="title"] .wally-title-card > :not([data-play]):not(.wally-start-picture) { display: none; }
+.wally-game[data-state="title"] .wally-play {
+  margin: 0;
+  padding: 24px 64px;
+  border: 4px solid #321b0e;
+  border-radius: 20px;
+  background: #b47a49;
+  color: #241208;
+  font: 900 48px/1.2 system-ui, sans-serif;
+  box-shadow: 0 8px 0 #321b0e;
+}
+.wally-game[data-state="title"] .wally-play:hover { background: #c48b58; }
+.wally-game[data-state="title"] .wally-play:focus-visible { outline: 4px solid #eed1af; outline-offset: 8px; }
+
+.wally-start-nav { display: none; }
+.wally-game[data-state="title"] .wally-start-nav {
+  display: flex;
+  position: absolute;
+  top: 24px;
+  left: 16px;
+  right: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 24px;
+}
+.wally-start-nav a {
+  color: #f8e5cf;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  padding: 8px 4px;
+}
+.wally-start-nav a:hover { color: #fff; }
+.wally-start-nav a:focus-visible { outline: 3px solid #eed1af; outline-offset: 3px; }
+
+.wally-start-picture { display: none; }
+.wally-game[data-state="title"] .wally-start-picture {
+  display: block;
+  width: min(240px, 50vw, 32svh);
+  height: min(240px, 50vw, 32svh);
+  object-fit: contain;
+  margin: 0 auto 24px;
+}
