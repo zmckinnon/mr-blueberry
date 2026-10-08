@@ -242,7 +242,25 @@ function boot(root) {
     status.textContent = 'Game unavailable';
   }
 
-  playButton.addEventListener('click', play);
+  const hatPicker = root.querySelector('[data-hat-picker]');
+  playButton.addEventListener('click', () => {
+    if (root.dataset.state === 'title') {
+      root.dataset.state = 'hats';
+      hatPicker.hidden = false;
+      playButton.hidden = true;
+      hatPicker.querySelector('button').focus();
+      return;
+    }
+    play();
+  });
+  hatPicker.querySelectorAll('[data-hat]').forEach(button => {
+    button.addEventListener('click', () => {
+      wally.setHat(button.dataset.hat);
+      hatPicker.hidden = true;
+      playButton.hidden = false;
+      play();
+    });
+  });
   pauseButton.addEventListener('click', () => running ? pause(true) : play());
   resetButton.addEventListener('click', () => {
     if (!ready || failed) return;

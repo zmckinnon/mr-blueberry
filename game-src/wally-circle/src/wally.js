@@ -130,8 +130,46 @@ export function createWally() {
     stroke(hat, points, 0.014, seam);
   }
 
+  const hats = { cap: hat };
+  function addHat(name) {
+    const group = new THREE.Group();
+    group.position.set(0, 2.04, 0.5);
+    group.visible = false;
+    model.add(group);
+    hats[name] = group;
+    return group;
+  }
+  function piece(group, geometry, color, y) {
+    const mesh = new THREE.Mesh(geometry, material(color));
+    mesh.position.y = y;
+    mesh.castShadow = true;
+    group.add(mesh);
+    return mesh;
+  }
+  const top = addHat('top');
+  piece(top, new THREE.CylinderGeometry(0.9, 0.9, 0.08, 32), '#25201b', 0.04);
+  piece(top, new THREE.CylinderGeometry(0.53, 0.53, 0.9, 32), '#25201b', 0.5);
+  piece(top, new THREE.CylinderGeometry(0.54, 0.54, 0.15, 32), '#db3654', 0.2);
+  const wizard = addHat('wizard');
+  piece(wizard, new THREE.CylinderGeometry(0.9, 0.9, 0.08, 32), '#5830aa', 0.04);
+  piece(wizard, new THREE.ConeGeometry(0.65, 1.15, 32), '#5830aa', 0.62);
+  ellipsoid(wizard, material('#ffda45'), [0, 0.5, 0.4], [0.12, 0.12, 0.04]);
+  const crown = addHat('crown');
+  piece(crown, new THREE.CylinderGeometry(0.65, 0.65, 0.3, 24, 1, true), '#ffbf24', 0.17);
+  for (let i = 0; i < 5; i++) {
+    const angle = i * Math.PI * 2 / 5;
+    const point = piece(crown, new THREE.ConeGeometry(0.18, 0.4, 4), '#ffbf24', 0.5);
+    point.position.x = Math.sin(angle) * 0.57;
+    point.position.z = Math.cos(angle) * 0.57;
+  }
+  ellipsoid(crown, material('#21bdce'), [0, 0.2, 0.66], [0.13, 0.13, 0.04]);
+
   return {
     model,
+    setHat(name) {
+      if (!hats[name]) return;
+      for (const [key, group] of Object.entries(hats)) group.visible = key === name;
+    },
     animate(state, speed) {
       model.rotation.y = state.heading;
       model.position.y = Math.sin(state.distance * 5) * 0.035 * speed;

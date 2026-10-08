@@ -50,6 +50,15 @@ stylesheets:
         <p class="eyebrow">Early version &middot; Circle challenge</p>
         <h2 data-overlay-title>Getting Wally ready&hellip;</h2>
         <p data-overlay-description>Loading the meadow. If this takes a while, try refreshing the page.</p>
+        <div class="wally-hat-picker" data-hat-picker hidden>
+          <h2>Pick your hat!</h2>
+          <div class="wally-hat-options">
+            <button type="button" data-hat="cap">🧢<span>Red baseball cap</span></button>
+            <button type="button" data-hat="top">🎩<span>Black top hat</span></button>
+            <button type="button" data-hat="wizard">🧙<span>Purple wizard hat</span></button>
+            <button type="button" data-hat="crown">👑<span>Gold crown</span></button>
+          </div>
+        </div>
         <button class="btn btn-primary wally-play" type="button" data-play disabled>Loading&hellip;</button>
       </div>
     </div>
