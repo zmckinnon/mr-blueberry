@@ -295,28 +295,6 @@
 .wally-game:is([data-state="title"], [data-state="hats"]) .wally-play:hover { background: #c48b58; }
 .wally-game:is([data-state="title"], [data-state="hats"]) .wally-play:focus-visible { outline: 4px solid #eed1af; outline-offset: 8px; }
 
-.wally-start-nav { display: none; }
-.wally-game:is([data-state="title"], [data-state="hats"]) .wally-start-nav {
-  display: flex;
-  position: absolute;
-  top: 24px;
-  left: 16px;
-  right: 16px;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px 24px;
-}
-.wally-start-nav a {
-  color: #f8e5cf;
-  font-size: 1.2rem;
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  padding: 8px 4px;
-}
-.wally-start-nav a:hover { color: #fff; }
-.wally-start-nav a:focus-visible { outline: 3px solid #eed1af; outline-offset: 3px; }
-
 .wally-start-picture { display: none; }
 .wally-game:is([data-state="title"], [data-state="hats"]) .wally-start-picture {
   display: block;

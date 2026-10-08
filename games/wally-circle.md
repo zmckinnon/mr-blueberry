@@ -15,6 +15,7 @@ stylesheets:
 </header>
 
 <section class="wally-game paper" data-wally-game data-state="loading" aria-labelledby="wally-circle-title">
+
   <div class="wally-toolbar">
     <div class="wally-toolbar-info">
       <span class="wally-version">Early version</span>
@@ -37,14 +38,7 @@ stylesheets:
       </div>
     </div>
     <div class="wally-overlay">
-      <nav class="wally-start-nav" aria-label="Other pages">
-        <a href="{{ '/' | relative_url }}">Home</a>
-        <a href="{{ '/books/' | relative_url }}">Books</a>
-        <a href="{{ '/games/' | relative_url }}">Games</a>
-        <a href="{{ '/characters/' | relative_url }}">Characters</a>
-        <a href="{{ '/about/' | relative_url }}">About</a>
-        <a href="{{ site.merch_url }}" target="_blank" rel="noopener noreferrer">Merch</a>
-      </nav>
+
       <div class="wally-title-card">
         <img class="wally-start-picture" src="{{ '/assets/characters/wally-face.png' | relative_url }}" alt="Wally" />
         <p class="eyebrow">Early version &middot; Circle challenge</p>
